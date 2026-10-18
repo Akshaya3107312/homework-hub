@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homework Hub – Multi-Student Homework Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+</head>
+<body class="theme-light">
+  <!-- Full Screen Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- ==========================================================================
+       FRONT PAGE: STUDENT AUTHENTICATION / LOGIN & SIGN UP PORTAL
+       ========================================================================== -->
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-card-wrapper">
+      <!-- Left Hero Banner -->
+      <div class="auth-hero-pane">
+        <div class="auth-brand">
+          <div class="brand-icon auth-brand-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+              <path d="M6 6h10"/>
+              <path d="M6 10h10"/>
+              <path d="M6 14h6"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="auth-brand-title">Homework<span class="brand-highlight">Hub</span></h1>
+            <p class="auth-brand-tagline">Student Homework Management Portal</p>
+          </div>
+        </div>
+
+        <div class="auth-hero-features">
+          <div class="auth-feature-item">
+            <span class="auth-feature-icon">👥</span>
+            <div>
+              <strong>Multi-Student Profiles</strong>
+              <p>Sign in with your student account to access your private assignments and class deadlines.</p>
+            </div>
+          </div>
+          <div class="auth-feature-item">
+            <span class="auth-feature-icon">📋</span>
+            <div>
+              <strong>Kanban Workflow & Calendar</strong>
+              <p>Track homework stages, due dates, and relative countdown alerts.</p>
+            </div>
+          </div>
+          <div class="auth-feature-item">
+            <span class="auth-feature-icon">⏱️</span>
+            <div>
+              <strong>Pomodoro Study Lounge</strong>
+              <p>Focus timer with procedural rain, wind, and white noise audio.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-hero-quote">
+          "Step by step, day by day, small study habits unlock monumental academic success."
+        </div>
+      </div>
+
+      <!-- Right Form Pane -->
+      <div class="auth-form-pane">
+        <!-- Auth Tabs: Sign In / Register -->
+        <div class="auth-tabs" id="authTabs">
+          <button type="button" class="auth-tab-btn active" id="tabSignInBtn">Student Sign In</button>
+          <button type="button" class="auth-tab-btn" id="tabRegisterBtn">Create Account</button>
+        </div>
+
+        <!-- 1. SIGN IN FORM -->
+        <form class="auth-form active" id="formSignIn" novalidate>
+          <div class="auth-form-header">
+            <h2 class="auth-form-title">Welcome Back! 🎓</h2>
+            <p class="auth-form-sub">Enter your username and password to open your homework hub.</p>
+          </div>
+
+          <div class="auth-error-banner" id="loginErrorBanner" style="display:none;"></div>
+
+          <div class="form-group">
+            <label for="loginUsername" class="form-label required">Student Username / Name</label>
+            <div class="auth-input-wrap">
+              <svg class="auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="loginUsername" class="form-input auth-input" placeholder="e.g. alex" required autocomplete="username" autofocus>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label-row">
+              <label for="loginPassword" class="form-label required">Password</label>
+              <span class="text-sm text-muted">Demo Password: <strong>1234</strong></span>
+            </div>
+            <div class="auth-input-wrap">
+              <svg class="auth-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="loginPassword" class="form-input auth-input" placeholder="Enter password (e.g. 1234)" required autocomplete="current-password">
+              <button type="button" class="btn-pwd-toggle" id="btnToggleLoginPwd" title="Show / Hide Password">👁️</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg auth-submit-btn" id="btnSignInSubmit">
+            <span>Sign In to Homework Hub</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+
+          <!-- Quick 1-Click Demo Accounts -->
+          <div class="quick-demo-section">
+            <div class="quick-demo-divider">
+              <span>OR 1-CLICK QUICK DEMO LOGIN</span>
+            </div>
+            <div class="quick-demo-chips">
+              <button type="button" class="demo-chip" data-user="alex" data-pass="1234">
+                <span class="demo-chip-name">👨‍🎓 Alex Parker</span>
+                <span class="demo-chip-sub">11th Grade &bull; alex / 1234</span>
+              </button>
+              <button type="button" class="demo-chip" data-user="maya" data-pass="1234">
+                <span class="demo-chip-name">👩‍🔬 Maya Lin</span>
+                <span class="demo-chip-sub">10th Grade &bull; maya / 1234</span>
+              </button>
+              <button type="button" class="demo-chip" data-user="jordan" data-pass="1234">
+                <span class="demo-chip-name">🎨 Jordan Smith</span>
+                <span class="demo-chip-sub">12th Grade &bull; jordan / 1234</span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- 2. REGISTER / CREATE ACCOUNT FORM -->
+        <form class="auth-form" id="formRegister" novalidate style="display:none;">
+          <div class="auth-form-header">
+            <h2 class="auth-form-title">Create Student Account 🎒</h2>
+            <p class="auth-form-sub">Sign up with a new student account to track your homework.</p>
+          </div>
+
+          <div class="auth-error-banner" id="registerErrorBanner" style="display:none;"></div>
+
+          <div class="form-group">
+            <label for="regFullName" class="form-label required">Full Name</label>
+            <input type="text" id="regFullName" class="form-input" placeholder="e.g. Sophia Chen" required maxlength="50">
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="regUsername" class="form-label required">Username</label>
+              <input type="text" id="regUsername" class="form-input" placeholder="e.g. sophia" required maxlength="30" autocomplete="username">
+            </div>
+
+            <div class="form-group">
+              <label for="regPassword" class="form-label required">Password</label>
+              <div class="auth-input-wrap">
+                <input type="password" id="regPassword" class="form-input" placeholder="Choose a password" required autocomplete="new-password">
+                <button type="button" class="btn-pwd-toggle" id="btnToggleRegPwd" title="Show / Hide Password">👁️</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="regGrade" class="form-label">Grade / Class</label>
+              <input type="text" id="regGrade" class="form-input" placeholder="e.g. 10th Grade" maxlength="40">
+            </div>
+
+            <div class="form-group">
+              <label for="regAvatar" class="form-label">Avatar Emoji</label>
+              <select id="regAvatar" class="form-select">
+                <option value="👨‍🎓">👨‍🎓 Graduate (Male)</option>
+                <option value="👩‍🎓">👩‍🎓 Graduate (Female)</option>
+                <option value="👩‍🔬">👩‍🔬 Scientist</option>
+                <option value="🧑‍💻">🧑‍💻 Coder / Tech</option>
+                <option value="🎨">🎨 Creative Arts</option>
+                <option value="📚">📚 Bookworm</option>
+                <option value="⚽">⚽ Athlete</option>
+                <option value="🚀">🚀 Astronaut / STEM</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail" class="form-label">Email / Student ID (Optional)</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="e.g. sophia@school.edu">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg auth-submit-btn" id="btnRegisterSubmit">
+            <span>Create Account & Open Hub</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="app-layout" id="appLayout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+              <path d="M6 6h10"/>
+              <path d="M6 10h10"/>
+              <path d="M6 14h6"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Homework<span class="brand-highlight">Hub</span></span>
+            <span class="brand-sub">Multi-Student Hub</span>
+          </div>
+        </div>
+        <button class="icon-btn sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Quick Action CTA -->
+      <div class="sidebar-action">
+        <button class="btn btn-primary btn-block shadow-sm" id="btnQuickAddTask">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5v14"/></svg>
+          <span>New Assignment</span>
+          <span class="kbd-badge">N</span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">WORKSPACE</div>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-link active" data-view="dashboard">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              <span>Dashboard & Tasks</span>
+              <span class="nav-badge" id="badgeTotalActive">0</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-view="kanban">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5Z"/><path d="M9 3v18M15 3v18"/></svg>
+              <span>Kanban Board</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-view="calendar">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Deadlines Calendar</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-view="subjects">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 6 8-4 8 4-8 4-8-4Z"/><path d="m4 14 8 4 8-4"/><path d="m4 10 8 4 8-4"/></svg>
+              <span>Courses & Subjects</span>
+              <span class="nav-badge" id="badgeSubjectCount">0</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-view="pomodoro">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Study Focus Timer</span>
+              <span class="pulse-dot"></span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link" data-view="roster">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span>Class Roster & Hub</span>
+              <span class="nav-badge" id="badgeStudentCount">3</span>
+            </button>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">FILTERS</div>
+        <ul class="nav-list filter-nav-list">
+          <li>
+            <button class="nav-link filter-nav-item" data-filter="today">
+              <span class="filter-dot dot-urgent"></span>
+              <span>Due Today</span>
+              <span class="nav-badge" id="badgeDueToday">0</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link filter-nav-item" data-filter="week">
+              <span class="filter-dot dot-warning"></span>
+              <span>Due This Week</span>
+              <span class="nav-badge" id="badgeDueWeek">0</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link filter-nav-item" data-filter="overdue">
+              <span class="filter-dot dot-danger"></span>
+              <span>Overdue</span>
+              <span class="nav-badge text-danger" id="badgeOverdue">0</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-link filter-nav-item" data-filter="completed">
+              <span class="filter-dot dot-success"></span>
+              <span>Completed</span>
+              <span class="nav-badge" id="badgeCompleted">0</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Footer (Daily Progress & Active Student Profile) -->
+      <div class="sidebar-footer">
+        <div class="daily-progress-card">
+          <div class="progress-info">
+            <span class="progress-title">Student Completion</span>
+            <span class="progress-percent" id="sidebarProgressPercent">0%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="sidebarProgressBar" style="width: 0%"></div>
+          </div>
+          <div class="progress-subtitle" id="sidebarProgressSub">0 of 0 tasks completed</div>
+        </div>
+
+        <div class="user-profile">
+          <div class="avatar" id="userAvatar">👨‍🎓</div>
+          <div class="user-meta">
+            <span class="user-name" id="userNameDisplay">Alex Parker</span>
+            <span class="user-grade" id="userGradeDisplay">11th Grade</span>
+          </div>
+          <button class="icon-btn switch-user-btn" id="btnSwitchUserSidebar" title="Switch Student Profile">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+          </button>
+          <button class="icon-btn logout-sidebar-btn" id="btnLogoutSidebar" title="Log Out of this student account">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main App Container -->
+    <div class="main-container">
+      <!-- Top Navbar Header -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+          </button>
+
+          <div class="search-box">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="globalSearchInput" placeholder="Search homework, subjects, notes..." autocomplete="off">
+            <kbd class="search-shortcut">/</kbd>
+            <button class="search-clear-btn" id="searchClearBtn" style="display:none;" aria-label="Clear search">&times;</button>
+          </div>
+        </div>
+
+        <div class="navbar-right">
+          <!-- Multi-Student Switcher Pill Button -->
+          <div class="dropdown-wrapper">
+            <button class="student-pill-btn" id="btnStudentSwitcherNav" title="Click to switch student profile">
+              <span class="student-pill-avatar" id="navStudentAvatar">👨‍🎓</span>
+              <span class="student-pill-name" id="navStudentName">Alex Parker</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="dropdown-menu student-dropdown-menu" id="studentDropdownMenu">
+              <div class="dropdown-header-title">SWITCH ACTIVE STUDENT</div>
+              <div class="student-dropdown-items" id="studentDropdownList">
+                <!-- Populated dynamically -->
+              </div>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item" id="btnManageStudentsModal">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                <span>Add / Manage Students</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Focus Timer Pill (appears when Pomodoro is running) -->
+          <button class="focus-pill" id="navFocusPill" style="display:none;" title="Click to view Focus Lounge">
+            <span class="focus-pill-pulse"></span>
+            <span id="navFocusTime">25:00</span>
+            <span class="focus-pill-tag">Focusing</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button class="icon-btn theme-toggle-btn" id="themeToggleBtn" title="Toggle Light / Dark mode" aria-label="Toggle theme">
+            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </button>
+
+          <!-- Data & Settings Menu Button -->
+          <div class="dropdown-wrapper">
+            <button class="icon-btn" id="btnSettingsMenu" title="Data & Tools" aria-label="Data tools">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+            </button>
+            <div class="dropdown-menu" id="settingsDropdown">
+              <button class="dropdown-item" id="btnExportData">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Export Multi-Student JSON</span>
+              </button>
+              <label class="dropdown-item file-upload-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span>Import Backup</span>
+                <input type="file" id="importFileInput" accept=".json" style="display:none;">
+              </label>
+              <button class="dropdown-item" id="btnPrintPlanner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                <span>Print Student Agenda</span>
+              </button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item text-warning" id="btnResetDemoData">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                <span>Reload Demo Students & Data</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Log Out Button -->
+          <button class="btn btn-outline btn-sm logout-nav-btn" id="btnLogoutNav" title="Log Out of this student account">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Log Out</span>
+          </button>
+
+          <!-- Primary CTA in header -->
+          <button class="btn btn-primary btn-sm header-cta" id="btnHeaderAddTask">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5v14"/></svg>
+            <span>Add Task</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content Views -->
+      <main class="content-scroll" id="mainContent">
+
+        <!-- VIEW 1: DASHBOARD & TASKS -->
+        <section class="view-panel active" id="view-dashboard">
+          <!-- Welcome Hero Banner -->
+          <div class="welcome-banner">
+            <div class="welcome-text">
+              <h1 class="welcome-title">Welcome back, <span id="studentGreetingName">Alex</span>! 🎓</h1>
+              <p class="welcome-sub" id="motivationalQuote">"Consistent study habits build extraordinary futures."</p>
+            </div>
+            <div class="welcome-actions">
+              <button class="btn btn-outline" id="btnQuickSwitchStudentHero">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+                <span>Switch Student</span>
+              </button>
+              <button class="btn btn-primary" id="btnBannerAddTask">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5v14"/></svg>
+                <span>New Assignment</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Metrics Stat Cards -->
+          <div class="stats-grid">
+            <div class="stat-card" data-stat="active">
+              <div class="stat-icon icon-blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="statActiveCount">0</div>
+                <div class="stat-label">Active Homework</div>
+              </div>
+            </div>
+
+            <div class="stat-card" data-stat="today">
+              <div class="stat-icon icon-amber">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="statDueTodayCount">0</div>
+                <div class="stat-label">Due Today & Tomorrow</div>
+              </div>
+            </div>
+
+            <div class="stat-card" data-stat="overdue">
+              <div class="stat-icon icon-red">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="statOverdueCount">0</div>
+                <div class="stat-label">Overdue Tasks</div>
+              </div>
+            </div>
+
+            <div class="stat-card" data-stat="pomodoro">
+              <div class="stat-icon icon-purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="statFocusMinutes">0m</div>
+                <div class="stat-label">Focused Study Today</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls Toolbar: Filters, Subjects, Priority, Sort, Layout -->
+          <div class="tasks-toolbar">
+            <div class="toolbar-left">
+              <!-- Filter Segmented Tabs -->
+              <div class="filter-tabs" id="filterStatusTabs">
+                <button class="filter-tab active" data-status="all">All</button>
+                <button class="filter-tab" data-status="pending">Pending</button>
+                <button class="filter-tab" data-status="in-progress">In Progress</button>
+                <button class="filter-tab" data-status="completed">Done</button>
+                <button class="filter-tab text-danger" data-status="overdue">Overdue</button>
+              </div>
+            </div>
+
+            <div class="toolbar-right">
+              <!-- Subject Dropdown Filter -->
+              <div class="select-wrapper">
+                <select id="filterSubjectSelect" class="form-select select-sm" aria-label="Filter by subject">
+                  <option value="all">All Subjects</option>
+                </select>
+              </div>
+
+              <!-- Priority Dropdown Filter -->
+              <div class="select-wrapper">
+                <select id="filterPrioritySelect" class="form-select select-sm" aria-label="Filter by priority">
+                  <option value="all">All Priorities</option>
+                  <option value="urgent">🔴 Urgent</option>
+                  <option value="high">🟠 High</option>
+                  <option value="medium">🟡 Medium</option>
+                  <option value="low">🔵 Low</option>
+                </select>
+              </div>
+
+              <!-- Sort Dropdown -->
+              <div class="select-wrapper">
+                <select id="sortTasksSelect" class="form-select select-sm" aria-label="Sort assignments">
+                  <option value="dueDateAsc">Due Date (Soonest)</option>
+                  <option value="dueDateDesc">Due Date (Latest)</option>
+                  <option value="priorityDesc">Priority (Highest)</option>
+                  <option value="titleAsc">Title (A - Z)</option>
+                </select>
+              </div>
+
+              <!-- Layout Switcher: Cards vs Compact List -->
+              <div class="layout-toggle" id="layoutToggle">
+                <button class="layout-btn active" data-layout="grid" title="Card Grid View">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                </button>
+                <button class="layout-btn" data-layout="compact" title="Compact Table View">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Filter Pill Bar (shown when filters are active) -->
+          <div class="active-filters-bar" id="activeFiltersBar" style="display:none;">
+            <span class="active-filter-label">Active filters:</span>
+            <div class="filter-tag-list" id="filterTagList"></div>
+            <button class="btn-link text-sm" id="btnClearAllFilters">Clear all</button>
+          </div>
+
+          <!-- Homework Task Cards Container -->
+          <div class="tasks-container layout-grid" id="tasksContainer">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-state" id="emptyState" style="display:none;">
+            <div class="empty-icon">🎒</div>
+            <h3 class="empty-title">No assignments found</h3>
+            <p class="empty-description" id="emptyDescription">You're all caught up! Enjoy your free time or add a new homework task.</p>
+            <button class="btn btn-primary" id="btnEmptyAddTask">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5v14"/></svg>
+              <span>Add Assignment</span>
+            </button>
+          </div>
+        </section>
+
+
+        <!-- VIEW 2: KANBAN BOARD -->
+        <section class="view-panel" id="view-kanban">
+          <div class="view-header">
+            <div>
+              <h2 class="view-title">Workflow Kanban Board</h2>
+              <p class="view-sub">Drag and drop cards across stages or click quick-move buttons for the active student.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btnKanbanAddTask">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg>
+              <span>Add Card</span>
+            </button>
+          </div>
+
+          <div class="kanban-board" id="kanbanBoard">
+            <!-- Column 1: To Do -->
+            <div class="kanban-column" data-status="pending">
+              <div class="kanban-column-header">
+                <div class="kanban-col-title-wrap">
+                  <span class="col-indicator col-todo"></span>
+                  <h3 class="kanban-col-title">To Do</h3>
+                  <span class="kanban-count" id="kanbanCountPending">0</span>
+                </div>
+                <button class="icon-btn-xs" data-action="quick-add" data-status="pending" title="Add to To-Do">+</button>
+              </div>
+              <div class="kanban-dropzone" id="kanbanListPending" data-status="pending">
+                <!-- Kanban cards rendered here -->
+              </div>
+            </div>
+
+            <!-- Column 2: In Progress -->
+            <div class="kanban-column" data-status="in-progress">
+              <div class="kanban-column-header">
+                <div class="kanban-col-title-wrap">
+                  <span class="col-indicator col-progress"></span>
+                  <h3 class="kanban-col-title">In Progress</h3>
+                  <span class="kanban-count" id="kanbanCountInProgress">0</span>
+                </div>
+                <button class="icon-btn-xs" data-action="quick-add" data-status="in-progress" title="Add to In Progress">+</button>
+              </div>
+              <div class="kanban-dropzone" id="kanbanListInProgress" data-status="in-progress">
+                <!-- Kanban cards rendered here -->
+              </div>
+            </div>
+
+            <!-- Column 3: Completed -->
+            <div class="kanban-column" data-status="completed">
+              <div class="kanban-column-header">
+                <div class="kanban-col-title-wrap">
+                  <span class="col-indicator col-done"></span>
+                  <h3 class="kanban-col-title">Completed</h3>
+                  <span class="kanban-count" id="kanbanCountCompleted">0</span>
+                </div>
+              </div>
+              <div class="kanban-dropzone" id="kanbanListCompleted" data-status="completed">
+                <!-- Kanban cards rendered here -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- VIEW 3: DEADLINES CALENDAR -->
+        <section class="view-panel" id="view-calendar">
+          <div class="calendar-wrapper">
+            <div class="calendar-header">
+              <div class="calendar-nav">
+                <h2 class="calendar-current-title" id="calendarMonthTitle">October 2026</h2>
+                <div class="calendar-btn-group">
+                  <button class="btn btn-outline btn-sm" id="btnCalPrev" aria-label="Previous Month">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                  </button>
+                  <button class="btn btn-outline btn-sm" id="btnCalToday">Today</button>
+                  <button class="btn btn-outline btn-sm" id="btnCalNext" aria-label="Next Month">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="calendar-legend">
+                <div class="legend-item"><span class="legend-dot" style="background-color: var(--urgent-color)"></span> Urgent</div>
+                <div class="legend-item"><span class="legend-dot" style="background-color: var(--high-color)"></span> High</div>
+                <div class="legend-item"><span class="legend-dot" style="background-color: var(--medium-color)"></span> Medium/Low</div>
+                <div class="legend-item"><span class="legend-dot" style="background-color: var(--success-color)"></span> Done</div>
+              </div>
+            </div>
+
+            <!-- Weekday Headers -->
+            <div class="calendar-weekdays">
+              <div>Sun</div>
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+            </div>
+
+            <!-- Days Grid -->
+            <div class="calendar-days-grid" id="calendarDaysGrid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- VIEW 4: COURSES & SUBJECTS -->
+        <section class="view-panel" id="view-subjects">
+          <div class="view-header">
+            <div>
+              <h2 class="view-title">Courses & Subjects</h2>
+              <p class="view-sub">Manage your academic classes, syllabus badges, and track completion progress.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btnAddSubjectBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg>
+              <span>Add Subject</span>
+            </button>
+          </div>
+
+          <div class="subjects-grid" id="subjectsGrid">
+            <!-- Dynamically populated course cards -->
+          </div>
+        </section>
+
+
+        <!-- VIEW 5: POMODORO FOCUS TIMER -->
+        <section class="view-panel" id="view-pomodoro">
+          <div class="pomodoro-layout">
+            <div class="pomodoro-card">
+              <!-- Mode Tabs -->
+              <div class="pomodoro-modes" id="pomodoroModes">
+                <button class="pomo-mode-btn active" data-mode="pomodoro">Focus (25m)</button>
+                <button class="pomo-mode-btn" data-mode="shortBreak">Short Break (5m)</button>
+                <button class="pomo-mode-btn" data-mode="longBreak">Long Break (15m)</button>
+              </div>
+
+              <!-- Big Timer Display with SVG Progress Ring -->
+              <div class="timer-display-wrap">
+                <svg class="timer-ring-svg" viewBox="0 0 280 280">
+                  <circle class="timer-ring-bg" cx="140" cy="140" r="125"></circle>
+                  <circle class="timer-ring-progress" id="timerRingProgress" cx="140" cy="140" r="125"></circle>
+                </svg>
+                <div class="timer-time-content">
+                  <div class="timer-digits" id="timerDisplay">25:00</div>
+                  <div class="timer-status-text" id="timerModeLabel">Time to study!</div>
+                </div>
+              </div>
+
+              <!-- Task Link Selector -->
+              <div class="pomo-task-selector">
+                <label for="pomoLinkedTask" class="form-label text-sm">Focusing on Homework Task:</label>
+                <select id="pomoLinkedTask" class="form-select">
+                  <option value="">General Study / No task linked</option>
+                  <!-- Populated dynamically with pending homework -->
+                </select>
+              </div>
+
+              <!-- Control Buttons -->
+              <div class="timer-controls">
+                <button class="btn btn-primary btn-lg pomo-start-btn" id="btnPomoStart">
+                  <svg id="pomoPlayIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <svg id="pomoPauseIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                  <span id="pomoStartLabel">Start Session</span>
+                </button>
+                <button class="btn btn-outline pomo-control-btn" id="btnPomoReset" title="Reset Session">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                </button>
+                <button class="btn btn-outline pomo-control-btn" id="btnPomoSkip" title="Skip to Next Session">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+                </button>
+              </div>
+
+              <!-- Ambient Sound Synthesizer Controls -->
+              <div class="ambient-sound-card">
+                <div class="ambient-header">
+                  <div class="ambient-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                    <span>Ambient Study Background Sound</span>
+                  </div>
+                  <span class="ambient-badge" id="ambientPlayingBadge" style="display:none;">Playing</span>
+                </div>
+                <div class="ambient-controls">
+                  <div class="ambient-sound-buttons">
+                    <button class="sound-chip" data-sound="rain">🌧️ Rain Shower</button>
+                    <button class="sound-chip" data-sound="whitenoise">🌊 White Noise</button>
+                    <button class="sound-chip" data-sound="waves">🌲 Forest Wind</button>
+                  </div>
+                  <div class="ambient-volume-wrap">
+                    <input type="range" id="ambientVolume" min="0" max="1" step="0.05" value="0.3" aria-label="Ambient volume">
+                    <button class="btn btn-sm btn-ghost" id="btnStopSound" style="display:none;">Stop Audio</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pomodoro Session Stats & History Sidebar -->
+            <div class="pomodoro-history-card">
+              <h3 class="pomo-history-title">Today's Focus Log</h3>
+              <div class="pomo-stat-summary">
+                <div class="pomo-stat-box">
+                  <span class="pomo-stat-num" id="pomoTodayCompleted">0</span>
+                  <span class="pomo-stat-txt">Pomodoros</span>
+                </div>
+                <div class="pomo-stat-box">
+                  <span class="pomo-stat-num" id="pomoTodayMinutes">0m</span>
+                  <span class="pomo-stat-txt">Total Focused</span>
+                </div>
+              </div>
+              <div class="pomo-history-list" id="pomoHistoryList">
+                <div class="empty-hint">Completed study blocks will appear here. Hit Start to begin!</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- VIEW 6: CLASS ROSTER & MULTI-STUDENT HUB -->
+        <section class="view-panel" id="view-roster">
+          <div class="view-header">
+            <div>
+              <h2 class="view-title">Class Roster & Student Hub</h2>
+              <p class="view-sub">Manage student accounts, compare completion stats, and broadcast class assignments.</p>
+            </div>
+            <div class="welcome-actions">
+              <button class="btn btn-outline btn-sm" id="btnBroadcastHomework">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+                <span>Broadcast Class Homework</span>
+              </button>
+              <button class="btn btn-primary btn-sm" id="btnRosterAddStudent">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                <span>Add Student</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Class Overview Metrics -->
+          <div class="stats-grid roster-stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon icon-blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="rosterTotalStudents">3</div>
+                <div class="stat-label">Enrolled Students</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-amber">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="rosterAvgCompletion">0%</div>
+                <div class="stat-label">Class Avg Completion</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-purple">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="rosterTotalAssignments">0</div>
+                <div class="stat-label">Total Homework Tasks</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon icon-red">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="stat-content">
+                <div class="stat-value" id="rosterTotalFocusHours">0h</div>
+                <div class="stat-label">Total Study Time</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Students Roster Cards -->
+          <div class="roster-section-header">
+            <h3 class="roster-section-title">All Student Profiles</h3>
+            <span class="text-sm text-muted">Click "Switch" to work as any student</span>
+          </div>
+
+          <div class="roster-cards-grid" id="rosterStudentsGrid">
+            <!-- Dynamically populated with student cards -->
+          </div>
+
+          <!-- Section: Academic Leaderboard -->
+          <div class="roster-section-header" style="margin-top: 36px;">
+            <h3 class="roster-section-title">🏆 Study & Homework Leaderboard</h3>
+            <span class="text-sm text-muted">Ranked by assignments completed & focus diligence</span>
+          </div>
+
+          <div class="leaderboard-table-card">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Student</th>
+                  <th>Grade</th>
+                  <th>Completed Tasks</th>
+                  <th>Focused Time</th>
+                  <th>Completion Rate</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="rosterLeaderboardBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT ASSIGNMENT (Multi-Student Aware) -->
+  <div class="modal-backdrop" id="assignmentModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="assignmentModalTitle">Add New Assignment</h3>
+        <button class="icon-btn modal-close-btn" id="btnCloseAssignmentModal" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="assignmentForm" class="modal-body" novalidate>
+        <input type="hidden" id="taskEditId">
+
+        <!-- Title -->
+        <div class="form-group">
+          <label for="taskTitleInput" class="form-label required">Assignment Title</label>
+          <input type="text" id="taskTitleInput" class="form-input" placeholder="e.g. Calculus Problem Set 4" required maxlength="120">
+          <div class="form-error" id="taskTitleError">Title is required</div>
+        </div>
+
+        <!-- Student Assignment Selection -->
+        <div class="form-group">
+          <label for="taskStudentSelect" class="form-label required">Assign To Student / Class</label>
+          <select id="taskStudentSelect" class="form-select" required>
+            <!-- Populated dynamically with students and "All Students (Class Homework)" -->
+          </select>
+        </div>
+
+        <!-- Subject & Priority Grid -->
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="taskSubjectSelect" class="form-label required">Subject / Course</label>
+            <div class="input-with-action">
+              <select id="taskSubjectSelect" class="form-select" required>
+                <!-- Populated dynamically -->
+              </select>
+              <button type="button" class="btn btn-outline btn-sm" id="btnQuickAddSubject" title="Add new subject">+</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="taskPrioritySelect" class="form-label required">Priority Level</label>
+            <select id="taskPrioritySelect" class="form-select" required>
+              <option value="urgent">🔴 Urgent (Immediate attention)</option>
+              <option value="high">🟠 High Priority</option>
+              <option value="medium" selected>🟡 Medium Priority</option>
+              <option value="low">🔵 Low Priority</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Due Date, Time & Estimated Minutes Grid -->
+        <div class="form-row-3">
+          <div class="form-group">
+            <label for="taskDueDateInput" class="form-label required">Due Date</label>
+            <input type="date" id="taskDueDateInput" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="taskDueTimeInput" class="form-label">Due Time</label>
+            <input type="time" id="taskDueTimeInput" class="form-input" value="23:59">
+          </div>
+
+          <div class="form-group">
+            <label for="taskEstDurationInput" class="form-label">Est. Time (min)</label>
+            <input type="number" id="taskEstDurationInput" class="form-input" placeholder="e.g. 60" min="5" max="999" step="5" value="45">
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label for="taskStatusSelect" class="form-label">Current Status</label>
+          <select id="taskStatusSelect" class="form-select">
+            <option value="pending">📝 To Do</option>
+            <option value="in-progress">⏳ In Progress</option>
+            <option value="completed">🎉 Completed</option>
+          </select>
+        </div>
+
+        <!-- Subtasks Checklist Section -->
+        <div class="form-group">
+          <div class="form-label-row">
+            <label class="form-label">Subtasks & Milestones</label>
+            <span class="subtask-counter-text" id="modalSubtaskCount">0 subtasks</span>
+          </div>
+          <div class="subtasks-input-row">
+            <input type="text" id="subtaskNewInput" class="form-input" placeholder="Add a step (e.g., Read chapter 3, draft thesis statement)...">
+            <button type="button" class="btn btn-outline" id="btnAddSubtaskItem">Add</button>
+          </div>
+          <ul class="modal-subtask-list" id="modalSubtaskList">
+            <!-- Dynamic subtask items -->
+          </ul>
+        </div>
+
+        <!-- Resource Link / Attachment URL -->
+        <div class="form-group">
+          <label for="taskResourceUrlInput" class="form-label">Resource / Assignment Link (Optional)</label>
+          <input type="url" id="taskResourceUrlInput" class="form-input" placeholder="https://canvas.instructure.com or Google Docs URL">
+        </div>
+
+        <!-- Notes / Instructions Textarea -->
+        <div class="form-group">
+          <label for="taskNotesInput" class="form-label">Notes, Rubric & Instructions</label>
+          <textarea id="taskNotesInput" class="form-textarea" rows="3" placeholder="Add key points, page numbers, submission details..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelAssignmentModal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveAssignment">Save Assignment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- MODAL: ADD / EDIT SUBJECT -->
+  <div class="modal-backdrop" id="subjectModal">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-header">
+        <h3 class="modal-title" id="subjectModalTitle">Add Course / Subject</h3>
+        <button class="icon-btn modal-close-btn" id="btnCloseSubjectModal" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="subjectForm" class="modal-body" novalidate>
+        <input type="hidden" id="subjectEditId">
+
+        <div class="form-group">
+          <label for="subjectNameInput" class="form-label required">Subject Name</label>
+          <input type="text" id="subjectNameInput" class="form-input" placeholder="e.g. AP Calculus BC" required maxlength="50">
+          <div class="form-error" id="subjectNameError">Subject name is required</div>
+        </div>
+
+        <div class="form-group">
+          <label for="subjectCodeInput" class="form-label">Course Code / Teacher</label>
+          <input type="text" id="subjectCodeInput" class="form-input" placeholder="e.g. MATH 301 - Dr. Smith" maxlength="40">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Theme Color</label>
+          <div class="color-picker-palette" id="subjectColorPalette">
+            <button type="button" class="color-swatch active" data-color="#4F46E5" style="background:#4F46E5"></button>
+            <button type="button" class="color-swatch" data-color="#06B6D4" style="background:#06B6D4"></button>
+            <button type="button" class="color-swatch" data-color="#10B981" style="background:#10B981"></button>
+            <button type="button" class="color-swatch" data-color="#F59E0B" style="background:#F59E0B"></button>
+            <button type="button" class="color-swatch" data-color="#EF4444" style="background:#EF4444"></button>
+            <button type="button" class="color-swatch" data-color="#8B5CF6" style="background:#8B5CF6"></button>
+            <button type="button" class="color-swatch" data-color="#EC4899" style="background:#EC4899"></button>
+            <button type="button" class="color-swatch" data-color="#14B8A6" style="background:#14B8A6"></button>
+          </div>
+          <input type="hidden" id="subjectSelectedColor" value="#4F46E5">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelSubjectModal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveSubject">Save Course</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- MODAL: ADD / EDIT STUDENT PROFILE -->
+  <div class="modal-backdrop" id="manageStudentModal">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-header">
+        <h3 class="modal-title" id="manageStudentModalTitle">Add Student Profile</h3>
+        <button class="icon-btn modal-close-btn" id="btnCloseManageStudentModal" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="studentManageForm" class="modal-body" novalidate>
+        <input type="hidden" id="studentEditId">
+
+        <div class="form-group">
+          <label for="studentNewNameInput" class="form-label required">Student Full Name</label>
+          <input type="text" id="studentNewNameInput" class="form-input" placeholder="e.g. Sophia Chen" required maxlength="50">
+          <div class="form-error" id="studentNameError">Student name is required</div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="studentNewGradeInput" class="form-label">Grade / Class</label>
+            <input type="text" id="studentNewGradeInput" class="form-input" placeholder="e.g. 10th Grade / Senior" maxlength="40">
+          </div>
+
+          <div class="form-group">
+            <label for="studentAvatarEmojiInput" class="form-label">Avatar Emoji</label>
+            <select id="studentAvatarEmojiInput" class="form-select">
+              <option value="👨‍🎓">👨‍🎓 Graduate (Male)</option>
+              <option value="👩‍🎓">👩‍🎓 Graduate (Female)</option>
+              <option value="👩‍🔬">👩‍🔬 Scientist</option>
+              <option value="🧑‍💻">🧑‍💻 Coder</option>
+              <option value="🎨">🎨 Artist</option>
+              <option value="📚">📚 Bookworm</option>
+              <option value="⚽">⚽ Athlete</option>
+              <option value="🚀">🚀 Astronaut</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="studentEmailInput" class="form-label">Email / Student ID</label>
+          <input type="email" id="studentEmailInput" class="form-input" placeholder="e.g. sophia.chen@school.edu">
+        </div>
+
+        <div class="form-group">
+          <label for="studentBioInput" class="form-label">Academic Focus / Major</label>
+          <input type="text" id="studentBioInput" class="form-input" placeholder="e.g. Pre-Engineering & Physics">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Badge Color</label>
+          <div class="color-picker-palette" id="studentColorPalette">
+            <button type="button" class="color-swatch active" data-color="#4F46E5" style="background:#4F46E5"></button>
+            <button type="button" class="color-swatch" data-color="#06B6D4" style="background:#06B6D4"></button>
+            <button type="button" class="color-swatch" data-color="#10B981" style="background:#10B981"></button>
+            <button type="button" class="color-swatch" data-color="#F59E0B" style="background:#F59E0B"></button>
+            <button type="button" class="color-swatch" data-color="#EF4444" style="background:#EF4444"></button>
+            <button type="button" class="color-swatch" data-color="#8B5CF6" style="background:#8B5CF6"></button>
+            <button type="button" class="color-swatch" data-color="#EC4899" style="background:#EC4899"></button>
+          </div>
+          <input type="hidden" id="studentSelectedColor" value="#4F46E5">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btnCancelManageStudentModal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveStudentSubmit">Save Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- MODAL: CALENDAR DAY DETAILS -->
+  <div class="modal-backdrop" id="calendarDayModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="calDayModalTitle">Deadlines on Date</h3>
+          <p class="modal-subtitle" id="calDayModalSubtitle"></p>
+        </div>
+        <button class="icon-btn modal-close-btn" id="btnCloseCalDayModal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="cal-day-task-list" id="calDayTaskList">
+          <!-- Dynamic tasks on this day -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" id="btnCloseCalDayModal2">Close</button>
+        <button type="button" class="btn btn-primary" id="btnAddCalDayTask">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5v14"/></svg>
+          <span>Add Task For This Day</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PRINTABLE STUDY SHEET CONTAINER (Used only when printing) -->
+  <div class="print-only-container" id="printPlannerContainer">
+    <!-- Populated on print -->
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Script Modules -->
+  <script src="js/storage.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/kanban.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/pomodoro.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
